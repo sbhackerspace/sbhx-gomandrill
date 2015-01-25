@@ -34,15 +34,16 @@ func ValidateSendResponses(body []byte) error {
 	for _, r := range resp {
 		switch r.Status {
 		case "rejected":
-			return fmt.Errorf("Email to %s rejected (id: %s): %v\n", r.Email,
+			return fmt.Errorf("Email to %s (id: %s) rejected: %v\n", r.Email,
 				r.Id, r.RejectedReason)
 		case "invalid":
 			return fmt.Errorf("Error sending invalid message %s to %s\n", r.Id,
 				r.Email)
-		case "queued":
-			fmt.Printf("Email to %s queued\n", r.Email)
-		case "sent":
-			fmt.Printf("Email to %s sent successfully\n", r.Email)
+		case "queued", "sent":
+			fmt.Printf("Email to %s (id: %s) %s\n", r.Email, r.Id, r.Status)
+		default:
+			fmt.Printf("Impossible status `%s` seen for SendResponse `%#v`\n",
+				r.Status, r)
 		}
 	}
 	return nil

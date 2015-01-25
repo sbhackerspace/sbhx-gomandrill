@@ -4,9 +4,9 @@
 package messages
 
 func emailsToRecipients(emails []string) []*Recipient {
-	recip := make([]*Recipient, len(emails))
-	for i := 0; i < len(emails); i++ {
-		recip[i] = &Recipient{Email: emails[i]}
+	recips := make([]*Recipient, 0, len(emails))
+	for _, em := range emails {
+		recips = append(recips, &Recipient{Email: em})
 	}
-	return recip
+	return recips
 }
