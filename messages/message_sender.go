@@ -56,6 +56,7 @@ func (sender *MandrillMessageSender) Send(msg *Message, async bool) error {
 	if err != nil {
 		return fmt.Errorf("Error sending *MandrillMessage: %v", err)
 	}
+	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
